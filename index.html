@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Joe's Hotdogs</title>
+
+<script language= "javascript">
+	function formdata(menu)
+	{
+		input = new Array(3);
+		var order = document.getElementById('items');
+		var dogs = document.getElementById('numDogs');
+		var fries = document.getElementById('numFries');
+		var drinks = document.getElementById('numDrinks');
+
+		var purchase = new Object();
+		purchase["Hotdogs"] = dogs.value;
+		purchase["Fries"] = fries.value;
+		purchase["Drinks"] = drinks.value;
+		//document.write("Ordered: <br>");
+		document.write("Receipt from Joe's Hotdogs <br>");
+		document.write("Ordered: <br>");
+		for(var i in purchase)
+		{
+			document.write(purchase[i] + ' ' + i + " <br>");
+		}
+		TotalCalc(purchase,menu);
+		//call TotalCalc to find the price and add the tax
+	}
+
+	function TotalCalc(purchase, menu) { //pass in array of orders
+		var subtot = 0;
+		var discount, tax, finalCost;
+		costs = new Array(3);
+		for (var i in purchase)
+		{
+			costs[i] = purchase[i] * menu[i];
+			subtot = subtot + costs[i];
+		}
+		if (subtot >= 20) {
+			discount = Math.round((subtot*0.1)*100)/100;
+			finalCost = subtot - discount;
+			tax = Math.round((finalCost * 0.0625)*100)/100;
+			finalCost = finalCost + tax;
+
+			document.write(" <br> <br> Your subtotal: $" + subtot + " <br>");
+			document.write("10% Discount applied: $" + discount + "<br>");
+			document.write("MA Tax applied: $" + tax + "<br>");
+			document.write("Total: $" + finalCost);;
+		} 
+		else 
+		{
+			discount = 0;
+			tax = Math.round((subtot * 0.0625)*100)/100;
+			finalCost = subtot + tax;
+			finalCost = Math.round(finalCost*100)/100;
+
+			document.write(" <br> <br> Your subtotal: $" + subtot + " <br>");
+			document.write("10% Discount not applicable <br>");
+			document.write("MA Tax applied: $" + tax + "<br>");
+			document.write("Total: $" + finalCost);;
+		}
+	}
+</script>
+</head>
+
+<style>
+	body {background-color: #FFD700;}
+	h1 {color: #000080; text-align: center}
+	h2 {color: #0E29C4; text-align: center}
+	h3 {color: #0E29C4; text-align: center}
+	form {text-align: center}
+	menu {text-align: center}
+	img {display: block; margin-left: auto; margin-right: auto; width: 50%;}
+</style>
+
+<body>
+	<header>
+		<h1> Joe's Hotdogs </h1>
+		<h2> Online Ordering Menu</h2>
+	</header>
+
+	<article>
+		<script language= "javascript">
+			//var menu = {"hotdogs": 3.25, "fries": 2.00; "drinks": 1.50};
+			var menu = new Object();
+			menu["Hotdogs"] = 3.25;
+			menu["Fries"] = 2.00;
+			menu["Drinks"] = 1.50;
+			for(var i in menu)
+			{
+				document.write(i + " = $" + menu[i] + " each <br>");
+			}
+		</script>
+
+		<h3> Place Your Order Below </h3>
+		<p id="items"></p>
+		<form>
+			# of Hotdogs: <input type = "text" id = "numDogs" /><br/>
+			# of French Fries: <input type = "text" id = "numFries" /><br/>
+			# of Drinks: <input type = "text" id = "numDrinks" /><br/>
+			<input type = "button" value = "Order" onclick = "formdata(menu);" />
+		</form>
+
+		<br><br><br>
+		<img src = "https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202018/Health/July/CR-Health-InlineHero-Healthy-HotDogs-07-18.jpg">
+
+	</article>
+
+</body>
+</html>
